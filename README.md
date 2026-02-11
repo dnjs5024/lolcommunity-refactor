@@ -1,5 +1,5 @@
 
-# lolcommunity 주소
+# lolcommunity 주소 http://34.64.180.254:8080/
 ![ndbisg](https://user-images.githubusercontent.com/66933008/111584726-9620aa00-8801-11eb-93d6-22e05a358199.png)
 ![커뮤니티메인](https://user-images.githubusercontent.com/66933008/111584742-9a4cc780-8801-11eb-9f62-b6db76388c32.png)
 ![유저정보](https://user-images.githubusercontent.com/66933008/111584749-9caf2180-8801-11eb-8bb6-5e5894c7c630.png)
