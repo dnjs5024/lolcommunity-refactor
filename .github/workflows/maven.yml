@@ -48,20 +48,25 @@ jobs:
           username: ${{ secrets.GCP_VM_USER }}
           key: ${{ secrets.GCP_VM_SSH_KEY }}
           script: |
+            # 폴더가 없으면 생성
+            mkdir -p /home/${{ secrets.GCP_VM_USER }}/project
             cd /home/${{ secrets.GCP_VM_USER }}/project
-            git pull origin main 
             
-            # 2. .env 파일 생성
-            printf 'RIOT_API_KEY=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\n' \
-            '${{ secrets.RIOT_API_KEY }}' \
-            '${{ secrets.DB_USER_NAME }}' \
-            '${{ secrets.DB_PASSWORD }}' > .env
+            # 깃 설정이 안되어 있다면 초기화 (이미 되어있으면 무시됨)
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://github.com/${{ github.repository }}.git
+            fi
             
-            # 3. 도커 허브에서 방금 빌드해서 올린 최신 이미지를 가져옵니다.
+            # 최신 코드 가져오기
+            git fetch --all
+            git reset --hard origin/main
+            
+            # .env 파일 생성
+            echo "RIOT_API_KEY=${{ secrets.RIOT_API_KEY }}" > .env
+            echo "DB_USERNAME=${{ secrets.DB_USER_NAME }}" >> .env
+            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            
+            # 실행
             docker-compose pull
-            
-            # 4. 빌드 과정 없이 바로 컨테이너만 교체합니다. (--build 제외)
             docker-compose up -d
-            
-            # 5. 안 쓰는 구버전 이미지 삭제
-            docker image prune -f
