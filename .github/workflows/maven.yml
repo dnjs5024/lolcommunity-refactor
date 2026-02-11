@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,22 +17,30 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
+      - name: Build with Maven
+        run: mvn -B package -DskipTests --file pom.xml
+
       # 도커허브 로그인
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-            # 이미지 빌드 및 푸시
-                      - name: Build and push
-                      uses: docker/build-push-action@v4
-                      with:
-                        context: .
-                        push: true
-                        tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}
-      - name: Build with Maven
-        run: mvn -B package -DskipTests --file pom.xml
 
+      # 이미지 빌드 및 푸시
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to GCP VM
         uses: appleboy/ssh-action@master
         with:
@@ -44,27 +52,6 @@ jobs:
             git pull origin main
             # .env 파일 생성 (gitignore 대상이므로 서버에서 직접 생성)
             printf 'RIOT_API_KEY=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\n' '${{ secrets.RIOT_API_KEY }}' '${{ secrets.DB_USER_NAME }}' '${{ secrets.DB_PASSWORD }}' > .env
+            docker-compose pull
             docker-compose up -d --build
-deploy:
-  needs: build # build 작업이 성공해야 실행
-  runs-on: ubuntu-latest
-  steps:
-    - name: Deploy to GCP VM
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.GCP_VM_IP }}        # VM의 외부 IP 주소
-        username: ${{ secrets.GCP_VM_USER }}  # 접속 계정 (보통 ubuntu 등)
-        key: ${{ secrets.GCP_VM_SSH_KEY }}     # 아까 등록한 개인키
-        script: |
-          # 서버 내부 작업
-          if [ ! -d "~/app" ]; then mkdir ~/app; fi
-          cd ~/app
-          
-          # .env 파일 생성 (환경변수 주입)
-          echo "RIOT_API_KEY=${{ secrets.RIOT_API_KEY }}" > .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          
-          # 최신 이미지 풀링 및 재실행
-          docker-compose pull
-          docker-compose up -d --build
-          docker image prune -f
+            docker image prune -f
