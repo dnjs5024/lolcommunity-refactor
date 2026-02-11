@@ -31,7 +31,7 @@
 				<td class="recent_td recent_champ" 
 					style=" vertical-align: middle; text-align: center; width: 52px; padding: 0px;"><div
 						style="position: relative; width: 100%; height: 100%;">
-						<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/${data.mChamp.championInfoId}.png" 
+						<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/${data.mChamp.championInfoId}.png" 
 						alt="챔피언" width="100" height="100">
 						<div
 							style="position: absolute; width: 100px; height: 25px; bottom: 0px; text-align: center; background-color: black; filter: alpha(opacity = 80); -moz-opacity: 0.8; opacity: 0.8; color: white; font-size: 20px;">
@@ -47,13 +47,13 @@
 					style="font-size: 18px; font-family: arial;"></span></td>
 				<td class="recent_td"
 					style=" vertical-align: middle; text-align: center; width: 130px; padding: 0px;">
-					<img width="50" style="margin-left: 5px;" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${data.mSpell1.summonerSpellId}.png">
+					<img width="50" style="margin-left: 5px;" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/spell/${data.mSpell1.summonerSpellId}.png">
 					<img class="show_new_build tipsy_live" alt="룬"
 					src="http://ddragon.leagueoflegends.com/cdn/img/${data.mRune1.runeImgPath}"
 					style="width: 50px; border: 0; cursor: pointer;">
 					<DIV style='text-align:left;display: none;'><SPAN style='color:#8F8; font-weight:700;'>${data.mRune1.runeName}</SPAN>${data.mRune1.runeDesc}</DIV><br>
 					
-					<img width="50" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/${data.mSpell2.summonerSpellId}.png">
+					<img width="50" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/spell/${data.mSpell2.summonerSpellId}.png">
 					<img class="show_new_build tipsy_live" alt="룬"
 					src="http://ddragon.leagueoflegends.com/cdn/img/${data.mRune2.runeImgPath}"
 					style="width: 40px; margin-left:5px; opacity: 0.3; border: 0; cursor: pointer;">
@@ -63,7 +63,7 @@
 				<div style="margin-bottom: 5px">
 				<c:forEach begin="0" end="4" var="i">
 				<c:if test="${match[i].champ.championInfoId !=null}">
-						<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/${match[i].champ.championInfoId}.png"
+						<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/${match[i].champ.championInfoId}.png"
 							alt="카시오페아" tipsy="카시오페아" width="50">
 				</c:if>
 				</c:forEach>
@@ -71,7 +71,7 @@
 					<div>
 				<c:forEach begin="5" end="9" var="i">
 				<c:if test="${match[i].champ.championInfoId !=null}">
-						<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/${match[i].champ.championInfoId}.png"
+						<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/${match[i].champ.championInfoId}.png"
 							alt="카시오페아" tipsy="카시오페아" width="50">
 				</c:if>
 				</c:forEach>
@@ -81,7 +81,7 @@
 						<div style="margin-bottom: 5px">
 						<c:if test="${data.mItems.matchItem0 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem0}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem0}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem0 ==0}">
@@ -91,7 +91,7 @@
 						
 						<c:if test="${data.mItems.matchItem1 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem1}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem1}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem1 ==0}">
@@ -101,7 +101,7 @@
 						
 						<c:if test="${data.mItems.matchItem2 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem2}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem2}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem2 ==0}">
@@ -111,7 +111,7 @@
 						
 						<c:if test="${data.mItems.matchItem6 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem6}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem6}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem6 ==0}">
@@ -122,7 +122,7 @@
 						<div>
 						<c:if test="${data.mItems.matchItem3 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem3}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem3}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem3 ==0}">
@@ -131,7 +131,7 @@
 						</c:if>
 						<c:if test="${data.mItems.matchItem4 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem4}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem4}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem4 ==0}">
@@ -140,7 +140,7 @@
 						</c:if>
 						<c:if test="${data.mItems.matchItem5 !=0}">
 							<img width="50"
-							src="https://opgg-static.akamaized.net/images/lol/item/${data.mItems.matchItem5}.png" class="tipsy_live"
+								 src="https://opgg-static.akamaized.net/meta/images/lol/16.3.1/item/${data.mItems.matchItem5}.png?image=q_auto:good,f_webp,w_64,h_64&v=1603"
 							tipsy="정령의 형상">
 						</c:if>
 						<c:if test="${data.mItems.matchItem5 ==0}">

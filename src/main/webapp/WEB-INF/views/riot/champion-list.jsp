@@ -170,7 +170,7 @@ function getList(){
 				html +='<div class="icon-box iconbox-blue" style="padding: 0px;  width: 120px">';
 				html +='<div class="icon">';
 				html +='<a href="/champion/'+champ.championInfoId+'">';
-				html +='<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/'+champ.championInfoId+'.png" width="80px">';
+				html +='<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/'+champ.championInfoId+'.png" width="80px">';
 				html +='</a></div>';
 				html +='<h4 style=" cursive;color: yellow;font-size: 14px;margin: 0;width: auto;color: white">'+champ.championInfoName+'</h4>';
 				html += '</div></div>';
@@ -232,7 +232,7 @@ function getRank(){
 				var position = res[i].position; 
 				var champ = res[i].champion;
 				$('#rank'+i).html(champ.championInfoName+'<br> KDA : '+kda+' / 승률 : '+avgWin+'% / 픽률 : '+avgPick+'%');
-				$('#rankImg'+i).html('<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/'+champ.championInfoId+'.png" width="60px" style="margin-left: 5px;">');
+				$('#rankImg'+i).html('<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/'+champ.championInfoId+'.png" width="60px" style="margin-left: 5px;">');
 			}
 		}
 		
@@ -253,7 +253,7 @@ function getPostion(position){
 				html +='<div class="icon-box iconbox-blue" style="padding: 0px;  width: 120px">';
 				html +='<div class="icon">';
 				html +='<a href="/champion/'+champ.championInfoId+'">';
-				html +='<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/'+champ.championInfoId+'.png" width="80px">';
+				html +='<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/'+champ.championInfoId+'.png" width="80px">';
 				html +='</a></div>';
 				html +='<h4 style="cursive;color: yellow;font-size: 14px;margin: 0;width: auto;color: white">'+champ.championInfoName+'</h4>';
 				html += '</div></div>';

@@ -11,4 +11,6 @@ import com.example.demo.riot.vo.ChampionSpellVO;
 public interface ChampionSpellMapper {
 	int insertChampionSpell (ChampionSpellVO spell);
 	List<ChampionSpellVO> selectChampionSpellList (ChampionInfoVO champ);
+	int deleteChampionSpellByKey(int championInfoKey);
+	int deleteAllChampionSpell();
 }

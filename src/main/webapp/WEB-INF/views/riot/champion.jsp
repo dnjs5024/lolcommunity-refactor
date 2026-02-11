@@ -45,7 +45,7 @@
     <div style="float: left">
       <div class="row">
 	    <div style="width: 150px" align="center">
-	     	<img src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/${champion.championInfoId}.png" width="150px">
+	     	<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/champion/${champion.championInfoId}.png" width="150px">
 	     	<h3 style=" cursive;color: white; margin: 0">${champion.championInfoName}</h3>
 	    </div>
 	    <div  style="width: 200px">
@@ -113,7 +113,7 @@ function getSpell(spell){
 	var type=spell.championSpellType; /* 단축키  */  
 	if(type=='Q'){
 		var html ='';
-		html +='<img id="imageQ" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/'+imageId+'.png" onmouseover="getDes(1)">'
+		html +='<img id="imageQ" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/spell/'+imageId+'.png" onmouseover="getDes(1)">'
 		$('.icon1').html(html);
 		html ='';
 		html +='<div style="display:none" id="Qdes"><span style="color:yellow">'+name+'</span><br>';
@@ -128,7 +128,7 @@ function getSpell(spell){
 	}
 	if(type=='W'){
 		var html ='';
-		html +='<img id="imageW" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/'+imageId+'.png" onmouseover="getDes(2)">'
+		html +='<img id="imageW" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/spell/'+imageId+'.png" onmouseover="getDes(2)">'
 		$('.icon2').html(html);
 		html ='';
 		html +='<div style="display:none" id="Wdes"><span style="color:yellow">'+name+'</span><br>';
@@ -143,7 +143,7 @@ function getSpell(spell){
 	}
 	if(type=='E'){
 		var html ='';
-		html +='<img id="imageE" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/'+imageId+'.png" onmouseover="getDes(3)">'
+		html +='<img id="imageE" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/spell/'+imageId+'.png" onmouseover="getDes(3)">'
 		$('.icon3').html(html);
 		html ='';
 		html +='<div style="display:none" id="Edes"><span style="color:yellow">'+name+'</span><br>';
@@ -158,7 +158,7 @@ function getSpell(spell){
 	}
 	if(type=='R'){
 		var html ='';
-		html +='<img id="imageR" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/spell/'+imageId+'.png" onmouseover="getDes(4)">'
+		html +='<img id="imageR" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/spell/'+imageId+'.png" onmouseover="getDes(4)">'
 		$('.icon4').html(html);
 		html ='';
 		html +='<div style="display:none" id="Rdes"><span style="color:yellow">'+name+'</span><br>';
@@ -173,7 +173,7 @@ function getSpell(spell){
 	}
 	if(type=='P'){
 		var html ='';
-		html +='<img id="imageP" src="http://ddragon.leagueoflegends.com/cdn/11.23.1/img/passive/'+imageId+'.png" onmouseover="getDes(0)">'
+		html +='<img id="imageP" src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/passive/'+imageId+'.png" onmouseover="getDes(0)">'
 		$('.icon0').html(html);
 		html ='';
 		html +='<div style="display:none" id="Pdes"><span style="color:yellow">'+name+'</span><br>';

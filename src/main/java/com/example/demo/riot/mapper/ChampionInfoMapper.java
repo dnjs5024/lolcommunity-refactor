@@ -9,6 +9,8 @@ import com.example.demo.riot.vo.ChampionInfoVO;
 @Mapper
 public interface ChampionInfoMapper {
 	int insertChampionInfo (ChampionInfoVO champion);
+	int upsertChampionInfo (ChampionInfoVO champion);
+	int countChampionInfo();
 	List<ChampionInfoVO> selectChampionInfoList (ChampionInfoVO champion);
 	List<ChampionInfoVO> selectChampionInfoPosition (String position);
 	List<ChampionInfoVO> searchChampionInfoList (String search);

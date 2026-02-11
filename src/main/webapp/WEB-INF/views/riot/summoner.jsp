@@ -31,7 +31,7 @@ table {
    	<div style="padding: 50px 0 100px 500px; width:100%;  height:250px; color: white ">
    	  <div class="profile"  style=" float:left;margin-right: 20px; text-align:center;">
 		<div style="margin-right:5px; align-items: center;">
-			<img src="http://ddragon.leagueoflegends.com/cdn/10.23.1/img/profileicon/${user.summonerInfoIcon}.png" style="width:120px; height:120px;" border="1px solid red">
+			<img src="http://ddragon.leagueoflegends.com/cdn/16.3.1/img/profileicon/${user.summonerInfoIcon}.png" style="width:120px; height:120px;" border="1px solid red">
 		</div>
 		<div style="padding-top:5px;">
 		 <span  style="font-size:25px; font-weight:bold;">${user.summonerInfoName}</span><br>
@@ -46,7 +46,7 @@ table {
 			리그 포인트: ${user.summonerInfoPoint}<br>
 			 ${user.summonerInfoWins+user.summonerInfoLosses}전 ${user.summonerInfoWins}승 ${user.summonerInfoLosses}패 
 			 (${Math.floor(user.summonerInfoWins*1000/(user.summonerInfoWins+user.summonerInfoLosses))/10}%)<br>
-			 <button onclick="gamePage()">업데이트</button>
+			 <button onclick="gameData()">업데이트</button>
 		</div>
 	 </div>
 	</div>
@@ -55,42 +55,38 @@ table {
 	  </div>	
 	  </c:if>
 	 <c:if test="${user eq null}">
-	 	없습니다
+	 	검색 결과가 없습니다
 	 </c:if>
    </section>
 <script>
-window.addEventListener("load", gameData());
-window.addEventListener("load", gamePage());
+window.addEventListener("load", function(){
+	gamePage(1);
+	gameData();
+});
 function gameData(){
 	$('.gameInfo').css('display','block')
 	$.ajax({
 		url:'/games/${param.summoner}',
 		method:'GET',
 		success:function(res){
-			console.log(res);
+			console.log("게임 데이터 로드 완료:", res);
+			gamePage(1);
 		}
 	})
 }
-function gamePage(){
-	var recentGame = $('.recent_game').length;
-	 if (Number.isNaN(recentGame)) {
-		    recentGame = 1;
-		  }
-	if(recentGame <= 0){
-		recentGame = 1;
+function gamePage(pageNo){
+	if(!pageNo || pageNo <= 0){
+		pageNo = 1;
 	}
 	$('.gameInfo').css('display','block')
 	$.ajax({
-		url:'/gamePage/${param.summoner}/'+recentGame,
+		url:'/gamePage/${param.summoner}/'+pageNo,
 		method:'GET',
 		success:function(res){
             $("#gamePage").html(res);
-			
 		}
 	})
 }
-
-
 </script>
 <%@ include file="/common/footer.jsp" %>
 </body>

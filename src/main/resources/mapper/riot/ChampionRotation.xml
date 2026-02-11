@@ -14,7 +14,7 @@
 			insert into champion_rotation(
 			<include refid="championRotationCols" />
 			) values(
-			#{freeChampionId},#{freeChampionId})
+			#{championInfoKey},#{championInfoKey})
 	</insert>
 
 	<delete id="deleteChampionRotation">

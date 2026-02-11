@@ -15,7 +15,14 @@
   	#{championSpellCost, jdbcType=VARCHAR},#{championSpellCooldown, jdbcType=VARCHAR},#{championSpellRange, jdbcType=VARCHAR},
   	#{championSpellName, jdbcType=VARCHAR},
   	#{championSpellId, jdbcType=VARCHAR},#{championSpellDescription, jdbcType=VARCHAR},#{championSpellType},#{championInfoKey}
-  	
   	)
-  </insert> 
+  </insert>
+
+  <delete id="deleteChampionSpellByKey" parameterType="int">
+  	delete from champion_spell where champion_info_key = #{championInfoKey}
+  </delete>
+
+  <delete id="deleteAllChampionSpell">
+  	delete from champion_spell
+  </delete>
 </mapper>

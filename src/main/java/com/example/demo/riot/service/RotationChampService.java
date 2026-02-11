@@ -5,5 +5,6 @@ import java.util.List;
 import com.example.demo.riot.vo.ChampionInfoVO;
 
 public interface RotationChampService {
-	 public List<ChampionInfoVO> getRotationChamp();
+	List<ChampionInfoVO> getRotationChamp();
+	int refreshRotation();
 }

@@ -23,5 +23,10 @@
   		#{runeId},
   		#{runeDesc}
 		)
-  </insert> 
+	ON CONFLICT (rune_id) DO UPDATE SET
+	rune_name = EXCLUDED.rune_name,
+	rune_key = EXCLUDED.rune_key,
+	rune_img_path = EXCLUDED.rune_img_path,
+	rune_desc = EXCLUDED.rune_desc
+  </insert>
 </mapper>

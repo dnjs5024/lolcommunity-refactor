@@ -31,5 +31,17 @@
   <insert id="insertChampionInfo"  parameterType="ChampionInfoVO">
   	insert into champion_info(<include refid="championInfoCols"/>) values(
   	#{championInfoId},#{championInfoName},#{championInfoKey})
-  </insert> 
+  </insert>
+
+  <insert id="upsertChampionInfo" parameterType="ChampionInfoVO">
+  	insert into champion_info(<include refid="championInfoCols"/>) values(
+  	#{championInfoId},#{championInfoName},#{championInfoKey})
+  	ON CONFLICT (champion_info_key) DO UPDATE
+  	SET champion_info_id = EXCLUDED.champion_info_id,
+  	    champion_info_name = EXCLUDED.champion_info_name
+  </insert>
+
+  <select id="countChampionInfo" resultType="int">
+  	select count(*) from champion_info
+  </select>
 </mapper>

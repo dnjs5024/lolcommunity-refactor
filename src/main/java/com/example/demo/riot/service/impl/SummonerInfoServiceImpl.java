@@ -170,7 +170,7 @@ public class SummonerInfoServiceImpl implements SummonerInfoService {
 			}
 			String puuid = accountInfo.get("puuid").toString();
 
-			// 2. summoner-v4: PUUID로 소환사 정보 조회
+			// 2. summoner-v4: PUUID로 소환사 정보 조회 (profileIconId, summonerLevel)
 			String summonerUrl = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/" + puuid;
 			String summonerResponse = rd.getReadData(summonerUrl);
 			if(summonerResponse == null) {
@@ -180,7 +180,8 @@ public class SummonerInfoServiceImpl implements SummonerInfoService {
 			if(summonerInfo.get("status") != null) {
 				return null;
 			}
-			siv.setSummonerInfoId(summonerInfo.get("id").toString());
+			// SummonerID 제거됨(2025.07) → PUUID를 기본 식별자로 사용
+			siv.setSummonerInfoId(puuid);
 			siv.setSummonerInfoAcid(puuid);
 			siv.setSummonerInfoName(gameName);
 			if((int)summonerInfo.get("profileIconId")<0) {
@@ -190,9 +191,13 @@ public class SummonerInfoServiceImpl implements SummonerInfoService {
 			}
 			siv.setSummonerInfoLevel((int)summonerInfo.get("summonerLevel"));
 
-			// 3. league-v4: 랭크 정보 조회
-			String leagueUrl = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/"+siv.getSummonerInfoId();
-			List<Map<String,Object>> summonerInfo2 = om.readValue(rd.getReadData(leagueUrl), List.class);
+			// 3. league-v4: PUUID로 랭크 정보 조회 (by-summoner 제거됨 → by-puuid 사용)
+			String leagueUrl = "https://kr.api.riotgames.com/lol/league/v4/entries/by-puuid/" + puuid;
+			String leagueResponse = rd.getReadData(leagueUrl);
+			if(leagueResponse == null) {
+				return siv;
+			}
+			List<Map<String,Object>> summonerInfo2 = om.readValue(leagueResponse, List.class);
 			if(summonerInfo2.size() == 0) {
 				return siv;
 			}
@@ -218,9 +223,13 @@ public class SummonerInfoServiceImpl implements SummonerInfoService {
 	public List<List<Map<String,Object>>> getGamePage(String userName,int pageNo){
 		userName = userName.replace(" ", "");
 		SummonerInfoVO summoner = sim.selectSummonerInfo(userName);
+		if(summoner == null) {
+			return new ArrayList<>();
+		}
+		int listRange = 10;
 		PageVO page = new PageVO();
-		page.setStartPageNo(1);
-		page.setLastPageNo(10);
+		page.setListRange(listRange);
+		page.setStartRow((pageNo - 1) * listRange);
 		summoner.setPage(page);
 		List<MatchGameInfoVO> games = mgim.selectMatchGameListById(summoner);
 		
@@ -240,54 +249,54 @@ public class SummonerInfoServiceImpl implements SummonerInfoService {
 		summoner = summoner.replace(" ", "");
 		SummonerInfoVO summonerInfo = sim.selectSummonerInfo(summoner);
 		if(summonerInfo==null) {
+			log.warn("소환사 정보 없음: {}", summoner);
 			return;
-		}else {
-			int cnt = mgim.totalMatchGameByName(summoner);
-			long timeValue = summonerInfo.getSummonerInfoMod();
-			Date date = new Date();
-			long today = date.getTime();
-			
-			long betweenTime = (long) Math.floor( (today - timeValue) / 1000/ 60);
-			if(betweenTime<6 && cnt !=0) {
-				
-				return;
-			}else{
-				summonerInfo.setSummonerInfoMod(today);
-				sim.updateSummonerInfo(summonerInfo);
-			}
-			
 		}
-		
-		String url = "https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/"+summonerInfo.getSummonerInfoAcid()+
-				"/ids";
-		ObjectMapper om = new ObjectMapper();
-		List<List<MatchGameInfoVO>> lMatchGame = new ArrayList<>();
-		try {
-			List<String> list = om.readValue(rd.getReadData(url), List.class);
 
-			if(list==null) {
+		int cnt = mgim.totalMatchGameByName(summoner);
+		long timeValue = summonerInfo.getSummonerInfoMod();
+		Date date = new Date();
+		long today = date.getTime();
+		long betweenTime = (long) Math.floor( (today - timeValue) / 1000/ 60);
+		if(betweenTime<6 && cnt !=0) {
+			log.info("최근 업데이트 {}분 전, 기존 데이터 {}건 → 스킵", betweenTime, cnt);
+			return;
+		}
+		summonerInfo.setSummonerInfoMod(today);
+		sim.updateSummonerInfo(summonerInfo);
+
+		String url = "https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/"
+				+ summonerInfo.getSummonerInfoAcid()
+				+ "/ids?type=ranked&start=0&count=20";
+		try {
+			String response = rd.getReadData(url);
+			if(response == null) {
+				log.error("매치 목록 API 응답 없음");
 				return;
 			}
-			for(String match : list) {
-				List<MatchGameInfoVO> matchGame = new ArrayList<>();
-				String matchId = match; // 
-				matchGame = mim.selectMatchGameId(matchId);
+			ObjectMapper om = new ObjectMapper();
+			List<String> list = om.readValue(response, List.class);
+			if(list==null || list.isEmpty()) {
+				log.info("매치 목록이 비어있음");
+				return;
+			}
+			log.info("매치 {}건 처리 시작", list.size());
+			for(String matchId : list) {
+				List<MatchGameInfoVO> matchGame = mim.selectMatchGameId(matchId);
 				if(matchGame.size() != 0) {
-					lMatchGame.add(matchGame);
 					continue;
-				}else {
-					
-					log.info("matchGame 없음 ==>{}",matchGame);
+				}
+				try {
+					log.info("매치 데이터 수집: {}", matchId);
 					Thread.sleep(2400);
 					pmg.getMatchData(matchId);
-					lMatchGame.add(mim.selectMatchGameId(matchId));
+				} catch (Exception e) {
+					log.error("매치 데이터 수집 실패: {}", matchId, e);
 				}
-
 			}
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			log.info("매치 처리 완료");
+		} catch (Exception e) {
+			log.error("parseGames 실패", e);
 		}
 	}
 	

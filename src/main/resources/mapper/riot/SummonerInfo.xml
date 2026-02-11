@@ -25,6 +25,17 @@
   	#{summonerInfoPoint},#{summonerInfoWins},#{summonerInfoLosses},#{summonerInfoMod},
   	#{summonerInfoIcon},#{summonerInfoLevel},#{summonerInfoAcid}
   	)
+  	ON CONFLICT (summoner_info_id) DO UPDATE SET
+  	summoner_info_tier = EXCLUDED.summoner_info_tier,
+  	summoner_info_rank = EXCLUDED.summoner_info_rank,
+  	summoner_info_name = EXCLUDED.summoner_info_name,
+  	summoner_info_point = EXCLUDED.summoner_info_point,
+  	summoner_info_wins = EXCLUDED.summoner_info_wins,
+  	summoner_info_losses = EXCLUDED.summoner_info_losses,
+  	summoner_info_mod = EXCLUDED.summoner_info_mod,
+  	summoner_info_icon = EXCLUDED.summoner_info_icon,
+  	summoner_info_level = EXCLUDED.summoner_info_level,
+  	summoner_info_acid = EXCLUDED.summoner_info_acid
   </insert> 
   
   

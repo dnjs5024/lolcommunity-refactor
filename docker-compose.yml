@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: lolcommunity
+      POSTGRES_USER: ${DB_USERNAME}      # Actions에서 주입
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Actions에서 주입
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: spring_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lolcommunity
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      RIOT_API_KEY: ${RIOT_API_KEY}      # Actions의 시크릿 값
+    depends_on:
+      - db

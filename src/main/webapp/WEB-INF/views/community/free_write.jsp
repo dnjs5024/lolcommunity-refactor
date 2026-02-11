@@ -9,7 +9,7 @@
 <jsp:include page="/common/head.jsp"/>
     <script src="/resources/assets/js/summemote/summernote-lite.js"></script>
 	<script src="/resources/assets/js/summemote/lang/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="/resources/assets/css/summemote/summernote-lite.css">  
+	<link rel="stylesheet" href="/resources/assets/css/summemote/summernote-lite.css">  guide_board
 	<link rel="stylesheet" type="text/css" href="https://nstatic.dcinside.com/dc/w/css/common.css?v=2004211415"/>
 	<link rel="stylesheet" type="text/css" href="https://nstatic.dcinside.com/dc/w/css/contents.css?2007011213"/>
 	<link rel="stylesheet" type="text/css" href="https://nstatic.dcinside.com/dc/w/css/popup.css?ver=200327"/>

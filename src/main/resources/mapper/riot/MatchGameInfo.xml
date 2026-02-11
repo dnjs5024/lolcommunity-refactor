@@ -45,7 +45,7 @@
    select MATCH_GAME_ID from match_game_info
 	where SUMMONER_INFO_ID=#{summonerInfoId}
 	order by MATCH_GAME_CREATION desc
-	LIMIT #{page.listRange} OFFSET #{page.startPageNo} - 1
+	LIMIT #{page.listRange} OFFSET #{page.startRow}
   </select>
  
   <insert id="insertMatchGameInfo"  parameterType="MatchGameInfoVO">

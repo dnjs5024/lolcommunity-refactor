@@ -416,7 +416,7 @@ public class ParseMatchGame {
 			}else {
 				mgi.setMatchGamePosition("none");
 			}
-			mgi.setSummonerInfoId(championInfo.get("summonerId").toString());
+			mgi.setSummonerInfoId(championInfo.get("puuid").toString());
 			
 			mgi.setMatchGameId(matchGameId);
 			mgi.setMatchGameWin(matchGameWin);
