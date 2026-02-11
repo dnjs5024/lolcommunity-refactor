@@ -63,12 +63,13 @@ jobs:
             git reset --hard origin/main
             
             # .env 파일 생성
-            echo "RIOT_API_KEY=${{ secrets.RIOT_API_KEY }}" > .env
-            echo "DB_USERNAME=${{ secrets.DB_USER_NAME }}" >> .env
-            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-            
-            export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
-            export DOCKERHUB_REPO=${{ secrets.DOCKERHUB_REPO }}
+            cat <<EOF > .env
+            RIOT_API_KEY=${{ secrets.RIOT_API_KEY }}
+            DB_USERNAME=${{ secrets.DB_USER_NAME }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            DOCKERHUB_REPO=${{ secrets.DOCKERHUB_REPO }}
+            EOF
             # 실행
             docker-compose pull
             docker-compose up -d
