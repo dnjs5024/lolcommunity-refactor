@@ -67,6 +67,8 @@ jobs:
             echo "DB_USERNAME=${{ secrets.DB_USER_NAME }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
             
+            export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            export DOCKERHUB_REPO=${{ secrets.DOCKERHUB_REPO }}
             # 실행
             docker-compose pull
             docker-compose up -d
