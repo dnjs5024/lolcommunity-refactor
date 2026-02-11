@@ -49,9 +49,19 @@ jobs:
           key: ${{ secrets.GCP_VM_SSH_KEY }}
           script: |
             cd /home/${{ secrets.GCP_VM_USER }}/project
-            git pull origin main
-            # .env 파일 생성 (gitignore 대상이므로 서버에서 직접 생성)
-            printf 'RIOT_API_KEY=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\n' '${{ secrets.RIOT_API_KEY }}' '${{ secrets.DB_USER_NAME }}' '${{ secrets.DB_PASSWORD }}' > .env
+            git pull origin main 
+            
+            # 2. .env 파일 생성
+            printf 'RIOT_API_KEY=%s\nDB_USERNAME=%s\nDB_PASSWORD=%s\n' \
+            '${{ secrets.RIOT_API_KEY }}' \
+            '${{ secrets.DB_USER_NAME }}' \
+            '${{ secrets.DB_PASSWORD }}' > .env
+            
+            # 3. 도커 허브에서 방금 빌드해서 올린 최신 이미지를 가져옵니다.
             docker-compose pull
-            docker-compose up -d --build
+            
+            # 4. 빌드 과정 없이 바로 컨테이너만 교체합니다. (--build 제외)
+            docker-compose up -d
+            
+            # 5. 안 쓰는 구버전 이미지 삭제
             docker image prune -f
