@@ -1,4 +1,4 @@
-# LOL Community
+# LOL Community 주소 http://34.64.180.254:8080/ 
 
 League of Legends 유저 전적 검색 및 커뮤니티 플랫폼
 
